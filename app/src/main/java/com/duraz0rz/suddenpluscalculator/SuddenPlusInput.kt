@@ -15,13 +15,14 @@ class SuddenPlusInput : AppCompatActivity() {
     }
 
     fun calculateSuddenPlusNumbers(view : View) {
-        val calculateIntent = Intent(this, SuddenPlusTable::class.java)
-        val minBPMText = findViewById<EditText>(R.id.textMinBPM).text.toString()
-        if (minBPMText == "") {
-            calculateIntent.putExtra("BPM", 0)
+        val minBPMTextField = findViewById<EditText>(R.id.textMinBPM)
+        val minBPMText = minBPMTextField.text.toString()
+        if (minBPMText.isNullOrEmpty()) {
+            minBPMTextField.error = "Must enter a BPM number!"
         } else {
+            val calculateIntent = Intent(this, SuddenPlusTable::class.java)
             calculateIntent.putExtra("BPM", parseInt(minBPMText))
+            startActivity(calculateIntent)
         }
-        startActivity(calculateIntent)
     }
 }
