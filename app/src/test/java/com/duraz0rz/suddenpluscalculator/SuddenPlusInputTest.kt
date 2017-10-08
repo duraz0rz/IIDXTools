@@ -20,7 +20,7 @@ class SuddenPlusInputTest {
         val expectedIntent = Intent(subject, SuddenPlusTable::class.java)
         val actualIntent = ShadowApplication.getInstance().nextStartedActivity
 
-        assertEquals(expectedIntent, actualIntent)
+        assertEquals(expectedIntent.component, actualIntent.component)
     }
 
 }

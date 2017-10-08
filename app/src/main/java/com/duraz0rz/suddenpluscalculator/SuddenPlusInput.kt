@@ -1,5 +1,6 @@
 package com.duraz0rz.suddenpluscalculator
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ class SuddenPlusInput : AppCompatActivity() {
     }
 
     fun calculateSuddenPlusNumbers(view : View) {
-//        val calculateIntent = Intent(this, SuddenPlusTable::class.java)
+        val calculateIntent = Intent(this, SuddenPlusTable::class.java)
+        startActivity(calculateIntent)
     }
 }
