@@ -1,5 +1,8 @@
 package com.duraz0rz.suddenpluscalculator
 
+import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.closeTo
+import com.natpryce.hamkrest.equalTo
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
@@ -9,7 +12,7 @@ class SuddenPlusCalculatorTest {
     @Test fun testCalculateSuddenPlusNumberReturnsCorrectWhiteNumberForInput() {
         val actualSuddenPlusNumber = subject.calculateSuddenPlus(hiSpeed = 2.0, bpm = 150, greenNumber = 310)
 
-        assertEquals(465.51, actualSuddenPlusNumber, 0.01)
+        assertThat(actualSuddenPlusNumber, closeTo(465.51, error = 0.01))
     }
 
     @Test fun testGenerateSuddenPlusTableReturnsAListOfSuddenPlusValuesWithHiSpeeds() {
@@ -17,11 +20,11 @@ class SuddenPlusCalculatorTest {
 
         val actualHighSpeedValues = suddenPlusList.map { it.highSpeed }
         val expectedHighSpeedValues = listOf("1.00","1.50","2.00","2.25","2.50","2.75","3.00","3.25","3.50","3.75","4.00")
-        assertEquals(expectedHighSpeedValues, actualHighSpeedValues)
+        assertThat(actualHighSpeedValues, equalTo(expectedHighSpeedValues))
     }
 
     @Test fun testGenerateSuddenPlusTableReturnsAListOfSuddenPlusValuesWithSuddenPlusNumber() {
-        val actualList = subject.generateSuddenPlusTable(bpm = 120, greenNumber = 400) as Collection<SuddenPlusValue>
+        val actualList = subject.generateSuddenPlusTable(bpm = 120, greenNumber = 400)
 
         val expectedList = listOf(
                 SuddenPlusValue(highSpeed = "1.00", whiteNumber = 724),
@@ -37,6 +40,6 @@ class SuddenPlusCalculatorTest {
                 SuddenPlusValue(highSpeed = "4.00", whiteNumber = -103)
         )
 
-        assertEquals(expectedList, actualList)
+        assertThat(actualList, equalTo(expectedList))
     }
 }

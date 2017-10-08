@@ -2,7 +2,8 @@ package com.duraz0rz.suddenpluscalculator
 
 import android.content.Intent
 import android.widget.Button
-import org.junit.Assert.assertEquals
+import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -20,7 +21,7 @@ class SuddenPlusInputTest {
         val expectedIntent = Intent(subject, SuddenPlusTable::class.java)
         val actualIntent = ShadowApplication.getInstance().nextStartedActivity
 
-        assertEquals(expectedIntent.component, actualIntent.component)
+        assertThat(actualIntent.component, equalTo(expectedIntent.component))
     }
 
 }
