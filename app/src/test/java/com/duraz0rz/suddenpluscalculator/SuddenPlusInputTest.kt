@@ -13,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowApplication
 
 @RunWith(RobolectricTestRunner::class)
@@ -103,6 +102,15 @@ class SuddenPlusInputTest {
         val actualMaxBPM = ShadowApplication.getInstance().nextStartedActivity.extras["MaxBPM"] as Int
 
         assertThat(actualMaxBPM, equalTo(expectedMaxBPM))
+    }
+
+    @Test fun testCalculateSuddenPlusNumberDoesNotSetErrorOnMaxBPMIfBlank() {
+        minBpmField.setText("150")
+        greenNumberField.setText("310")
+        calculateButton.performClick()
+
+        assertThat(ShadowApplication.getInstance().nextStartedActivity, present())
+        assertThat(maxBpmField.error, absent())
     }
 
     private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String = "0", greenNumber: String = "0") {

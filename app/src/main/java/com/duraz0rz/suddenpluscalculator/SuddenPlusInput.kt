@@ -8,6 +8,7 @@ import android.widget.EditText
 import java.lang.Integer.parseInt
 
 class SuddenPlusInput : AppCompatActivity() {
+    data class FieldValidation (val field : EditText, val errorText : String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,19 +17,25 @@ class SuddenPlusInput : AppCompatActivity() {
 
     fun calculateSuddenPlusNumbers(view: View) {
         var hasErrors = false
+        val minBPMField = findViewById<EditText>(R.id.textMinBPM)
+        val maxBPMField = findViewById<EditText>(R.id.textMaxBPM)
+        val greenNumberField = findViewById<EditText>(R.id.textGreenNumber)
 
-        fun parseFieldForPotentialNumber(field : EditText, errorText : String) : Int? {
-            if (field.text.isNullOrEmpty()) {
+        fun checkFieldsForErrors(vararg fields : FieldValidation) {
+            fields.filter { it.field.text.isNullOrEmpty() }.forEach {
                 hasErrors = true
-                field.error = errorText
-                return null
+                it.field.error = it.errorText
             }
-            return parseInt(field.text.toString())
         }
 
-        val minBPM = parseFieldForPotentialNumber(findViewById(R.id.textMinBPM), errorText = "Must enter a BPM number!")
-        val maxBPM = parseFieldForPotentialNumber(findViewById(R.id.textMaxBPM), "")
-        val greenNumber = parseFieldForPotentialNumber(findViewById(R.id.textGreenNumber), errorText = "Must enter a green number!")
+        val minBPM = parseFieldForPotentialNumber(minBPMField)
+        val maxBPM = parseFieldForPotentialNumber(maxBPMField)
+        val greenNumber = parseFieldForPotentialNumber(greenNumberField)
+
+        checkFieldsForErrors(
+                FieldValidation(minBPMField, "Must enter a BPM number!"),
+                FieldValidation(greenNumberField, "Must enter a green number!")
+        )
 
         if (!hasErrors) {
             val calculateIntent = Intent(this, SuddenPlusTable::class.java).apply {
@@ -38,6 +45,10 @@ class SuddenPlusInput : AppCompatActivity() {
             }
             startActivity(calculateIntent)
         }
+    }
+
+    private fun parseFieldForPotentialNumber(field : EditText) : Int? {
+        return if (field.text.isNullOrEmpty()) null else parseInt(field.text.toString())
     }
 
 }
