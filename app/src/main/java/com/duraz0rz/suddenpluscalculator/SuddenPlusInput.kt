@@ -15,19 +15,27 @@ class SuddenPlusInput : AppCompatActivity() {
     }
 
     fun calculateSuddenPlusNumbers(view: View) {
-        val minBPMTextField = findViewById<EditText>(R.id.textMinBPM)
-        val greenNumberTextField = findViewById<EditText>(R.id.textGreenNumber)
-        val minBPMText = minBPMTextField.text.toString()
-        val greenNumberText = greenNumberTextField.text.toString()
+        var hasErrors = false
 
-        if (minBPMText.isEmpty()) minBPMTextField.error = "Must enter a BPM number!"
-        if (greenNumberText.isEmpty()) greenNumberTextField.error = "Must enter a green number!"
+        fun parseFieldForPotentialNumber(field : EditText, errorText : String) : Int? {
+            if (field.text.isNullOrEmpty()) {
+                hasErrors = true
+                field.error = errorText
+                return null
+            }
+            return parseInt(field.text.toString())
+        }
 
-        if (minBPMText.isNotEmpty() && greenNumberText.isNotEmpty()) {
-            val calculateIntent = Intent(this, SuddenPlusTable::class.java)
-            calculateIntent.putExtra("BPM", parseInt(minBPMText))
-            calculateIntent.putExtra("GreenNumber", parseInt(greenNumberText))
+        val minBPM : Int? = parseFieldForPotentialNumber(findViewById(R.id.textMinBPM), errorText = "Must enter a BPM number!")
+        val greenNumber : Int? = parseFieldForPotentialNumber(findViewById(R.id.textGreenNumber), errorText = "Must enter a green number!")
+
+        if (!hasErrors) {
+            val calculateIntent = Intent(this, SuddenPlusTable::class.java).apply {
+                putExtra("BPM", minBPM)
+                putExtra("GreenNumber", greenNumber)
+            }
             startActivity(calculateIntent)
         }
     }
+
 }
