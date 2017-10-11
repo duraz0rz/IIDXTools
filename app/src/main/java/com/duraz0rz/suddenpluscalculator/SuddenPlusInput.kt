@@ -21,23 +21,32 @@ class SuddenPlusInput : AppCompatActivity() {
         val maxBPMField = findViewById<EditText>(R.id.textMaxBPM)
         val greenNumberField = findViewById<EditText>(R.id.textGreenNumber)
 
-        fun checkFieldsForErrors(vararg fields : FieldValidation) {
+        val minBPM = parseFieldForPotentialNumber(minBPMField)
+        val maxBPM = parseFieldForPotentialNumber(maxBPMField)
+        val greenNumber = parseFieldForPotentialNumber(greenNumberField)
+
+        fun checkForEmptyFields(vararg fields : FieldValidation) {
             fields.filter { it.field.text.isNullOrEmpty() }.forEach {
                 hasErrors = true
                 it.field.error = it.errorText
             }
         }
 
-        checkFieldsForErrors(
+        fun checkIfMaxBPMIsGreaterThanMinBPM(minBPM : Int?, maxBPM : Int?) {
+            if (minBPM != null && maxBPM != null && maxBPM < minBPM) {
+                hasErrors = true
+                maxBPMField.error = "Max BPM must be greater than min BPM!"
+            }
+        }
+
+        checkForEmptyFields(
             FieldValidation(minBPMField, "Must enter a BPM number!"),
             FieldValidation(greenNumberField, "Must enter a green number!")
         )
 
-        if (!hasErrors) {
-            val minBPM = parseFieldForPotentialNumber(minBPMField)
-            val maxBPM = parseFieldForPotentialNumber(maxBPMField)
-            val greenNumber = parseFieldForPotentialNumber(greenNumberField)
+        checkIfMaxBPMIsGreaterThanMinBPM(minBPM, maxBPM)
 
+        if (!hasErrors) {
             val calculateIntent = Intent(this, SuddenPlusTable::class.java).apply {
                 putExtra("BPM", minBPM)
                 putExtra("MaxBPM", maxBPM)
@@ -50,5 +59,4 @@ class SuddenPlusInput : AppCompatActivity() {
     private fun parseFieldForPotentialNumber(field : EditText) : Int? {
         return if (field.text.isNullOrEmpty()) null else parseInt(field.text.toString())
     }
-
 }

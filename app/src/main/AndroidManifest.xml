@@ -12,11 +12,10 @@
         <activity android:name=".SuddenPlusInput">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SuddenPlusTable"></activity>
+        <activity android:name=".SuddenPlusTable" android:parentActivityName=".SuddenPlusInput" />
     </application>
 
 </manifest>

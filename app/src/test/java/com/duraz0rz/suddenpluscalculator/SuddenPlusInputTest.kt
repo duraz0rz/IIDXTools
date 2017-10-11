@@ -42,7 +42,7 @@ class SuddenPlusInputTest {
 
     @Test fun testCalculateSuddenPlusNumbersAddsMinBPMToIntent() {
         val expectedBPM = 144
-        setFieldsAndClick(minBPM = expectedBPM.toString())
+        setFieldsAndClick(minBPM = expectedBPM.toString(), maxBPM = "144")
 
         minBpmField.setText(expectedBPM.toString())
         calculateButton.performClick()
@@ -111,6 +111,13 @@ class SuddenPlusInputTest {
 
         assertThat(ShadowApplication.getInstance().nextStartedActivity, present())
         assertThat(maxBpmField.error, absent())
+    }
+
+    @Test fun testCalculateSuddenPlusNumberSetsErrorOnMaxBPMIfItIsSmallerThanMinBPM() {
+        setFieldsAndClick(minBPM = "150", maxBPM = "140", greenNumber = "310")
+
+        assertThat(ShadowApplication.getInstance().nextStartedActivity, absent())
+        assertThat(maxBpmField.error.toString(), equalTo("Max BPM must be greater than min BPM!"))
     }
 
     private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String = "0", greenNumber: String = "0") {
