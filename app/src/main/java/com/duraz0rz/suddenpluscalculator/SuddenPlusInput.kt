@@ -17,11 +17,13 @@ class SuddenPlusInput : AppCompatActivity() {
     fun calculateSuddenPlusNumbers(view : View) {
         val minBPMTextField = findViewById<EditText>(R.id.textMinBPM)
         val minBPMText = minBPMTextField.text.toString()
-        if (minBPMText.isNullOrEmpty()) {
+        if (minBPMText.isEmpty()) {
             minBPMTextField.error = "Must enter a BPM number!"
         } else {
             val calculateIntent = Intent(this, SuddenPlusTable::class.java)
             calculateIntent.putExtra("BPM", parseInt(minBPMText))
+            val greenNumberText = findViewById<EditText>(R.id.textGreenNumber).text.toString()
+            calculateIntent.putExtra("GreenNumber", parseInt(greenNumberText))
             startActivity(calculateIntent)
         }
     }
