@@ -6,7 +6,6 @@ import android.widget.EditText
 import com.natpryce.hamkrest.absent
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import com.natpryce.hamkrest.isEmptyString
 import com.natpryce.hamkrest.isNullOrEmptyString
 import org.junit.Before
 import org.junit.Test
