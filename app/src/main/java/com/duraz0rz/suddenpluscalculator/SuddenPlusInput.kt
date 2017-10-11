@@ -28,16 +28,16 @@ class SuddenPlusInput : AppCompatActivity() {
             }
         }
 
-        val minBPM = parseFieldForPotentialNumber(minBPMField)
-        val maxBPM = parseFieldForPotentialNumber(maxBPMField)
-        val greenNumber = parseFieldForPotentialNumber(greenNumberField)
-
         checkFieldsForErrors(
-                FieldValidation(minBPMField, "Must enter a BPM number!"),
-                FieldValidation(greenNumberField, "Must enter a green number!")
+            FieldValidation(minBPMField, "Must enter a BPM number!"),
+            FieldValidation(greenNumberField, "Must enter a green number!")
         )
 
         if (!hasErrors) {
+            val minBPM = parseFieldForPotentialNumber(minBPMField)
+            val maxBPM = parseFieldForPotentialNumber(maxBPMField)
+            val greenNumber = parseFieldForPotentialNumber(greenNumberField)
+
             val calculateIntent = Intent(this, SuddenPlusTable::class.java).apply {
                 putExtra("BPM", minBPM)
                 putExtra("MaxBPM", maxBPM)
