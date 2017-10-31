@@ -21,7 +21,7 @@ class SuddenPlusTableActivity : AppCompatActivity() {
         val minBPM = intent.getIntExtra("BPM", Int.MIN_VALUE)
         val greenNumber = intent.getIntExtra("GreenNumber", Int.MIN_VALUE)
 
-        val suddenPlusValues = suddenPlusCalculator.generateSuddenPlusTable(minBPM, greenNumber)
+        val suddenPlusValues = suddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber)
 
         val table = this.findViewById<TableLayout>(R.id.tblHiSpeed)
 
@@ -41,7 +41,7 @@ class SuddenPlusTableActivity : AppCompatActivity() {
         val tableRow = TableRow(this)
 
         tableRow.addView(generateTableCell(minBPMValue.highSpeed))
-        tableRow.addView(generateTableCell(minBPMValue.whiteNumber.toString()))
+        tableRow.addView(generateTableCell(minBPMValue.minWhiteNumber.toString()))
         tableRow.addView(generateTableCell(""))
 
         return tableRow

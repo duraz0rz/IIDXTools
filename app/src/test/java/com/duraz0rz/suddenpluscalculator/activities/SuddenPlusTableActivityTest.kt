@@ -43,9 +43,9 @@ class SuddenPlusTableActivityTest {
     }
 
     @Test fun onCreateGeneratesRowsForEachValueReturned() {
-        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(minBPM, greenNumber)).thenReturn(listOf(
-                SuddenPlusValue("4.00", whiteNumber = 55),
-                SuddenPlusValue("3.75", whiteNumber = 44)
+        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber)).thenReturn(listOf(
+                SuddenPlusValue("4.00", minWhiteNumber = 55),
+                SuddenPlusValue("3.75", minWhiteNumber = 44)
         ))
 
         activityController.create()

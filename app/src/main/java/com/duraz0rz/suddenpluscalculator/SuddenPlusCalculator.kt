@@ -1,23 +1,30 @@
 package com.duraz0rz.suddenpluscalculator
 
 class SuddenPlusCalculator {
+
+    private val highSpeedValues = listOf(0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.25, 3.5, 3.75, 4.0)
+
     fun calculateSuddenPlus(hiSpeed: Double, bpm: Int, greenNumber: Int): Double {
         return 1000 - (hiSpeed * bpm * greenNumber / 174)
     }
 
-    fun generateSuddenPlusTable(bpm: Int, greenNumber: Int): List<SuddenPlusValue> {
-        return listOf(
-                SuddenPlusValue(highSpeed = "1.00", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 1.0, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "1.50", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 1.5, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "2.00", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 2.0, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "2.25", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 2.25, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "2.50", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 2.50, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "2.75", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 2.75, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "3.00", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 3.0, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "3.25", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 3.25, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "3.50", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 3.5, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "3.75", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 3.75, bpm = bpm, greenNumber = greenNumber))),
-                SuddenPlusValue(highSpeed = "4.00", whiteNumber = Math.round(calculateSuddenPlus(hiSpeed = 4.0, bpm = bpm, greenNumber = greenNumber)))
-        )
+    fun generateSuddenPlusTable(bpm: Int, maxBpm: Int? = null, greenNumber: Int): List<SuddenPlusValue> {
+        if (maxBpm != null) {
+            return highSpeedValues.map {
+                SuddenPlusValue(
+                        highSpeed = "%.2f".format(it),
+                        minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber)),
+                        maxWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = maxBpm, greenNumber = greenNumber))
+                )
+            }
+        } else {
+            return highSpeedValues.map {
+                SuddenPlusValue(
+                        highSpeed = "%.2f".format(it),
+                        minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber))
+                )
+            }
+        }
+
     }
 }
