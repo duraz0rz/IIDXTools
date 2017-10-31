@@ -5,4 +5,7 @@
     <string name="greenNumber">Green Number</string>
     <string name="btnCalculate">Calculate</string>
     <string name="title_activity_sudden_plus_table">Sudden+ Table</string>
+    <string name="hiSpeedHeader">Hi-speeds</string>
+    <string name="minBPMHeaderPlaceholder">Min BPM</string>
+    <string name="maxBPMHeaderPlaceholder">Max BPM</string>
 </resources>

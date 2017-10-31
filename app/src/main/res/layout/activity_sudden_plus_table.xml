@@ -6,4 +6,31 @@
     android:layout_height="match_parent"
     tools:context="com.duraz0rz.suddenpluscalculator.SuddenPlusTable">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="*">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/txtHiSpeedHeader"
+                android:text="@string/hiSpeedHeader"
+                android:gravity="center"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/txtMinBPMHeader"
+                android:text="@string/minBPMHeaderPlaceholder"
+                android:gravity="center"
+                android:padding="3dp" />
+
+            <TextView
+                android:id="@+id/txtMaxBPMHeader"
+                android:text="@string/maxBPMHeaderPlaceholder"
+                android:gravity="center"
+                android:padding="3dp" />
+        </TableRow>
+
+    </TableLayout>
+
 </android.support.constraint.ConstraintLayout>
