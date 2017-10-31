@@ -1,13 +1,14 @@
-package com.duraz0rz.suddenpluscalculator
+package com.duraz0rz.suddenpluscalculator.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.duraz0rz.suddenpluscalculator.R
 import java.lang.Integer.parseInt
 
-class SuddenPlusInput : AppCompatActivity() {
+class SuddenPlusInputActivity : AppCompatActivity() {
     data class FieldValidation (val field : EditText, val errorText : String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +41,14 @@ class SuddenPlusInput : AppCompatActivity() {
         }
 
         checkForEmptyFields(
-            FieldValidation(minBPMField, "Must enter a BPM number!"),
-            FieldValidation(greenNumberField, "Must enter a green number!")
+                FieldValidation(minBPMField, "Must enter a BPM number!"),
+                FieldValidation(greenNumberField, "Must enter a green number!")
         )
 
         checkIfMaxBPMIsGreaterThanMinBPM(minBPM, maxBPM)
 
         if (!hasErrors) {
-            val calculateIntent = Intent(this, SuddenPlusTable::class.java).apply {
+            val calculateIntent = Intent(this, SuddenPlusTableActivity::class.java).apply {
                 putExtra("BPM", minBPM)
                 putExtra("MaxBPM", maxBPM)
                 putExtra("GreenNumber", greenNumber)

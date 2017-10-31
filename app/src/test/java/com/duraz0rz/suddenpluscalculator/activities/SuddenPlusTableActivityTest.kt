@@ -1,4 +1,4 @@
-package com.duraz0rz.suddenpluscalculator
+package com.duraz0rz.suddenpluscalculator.activities
 
 import android.content.Intent
 import com.natpryce.hamkrest.assertion.assertThat
@@ -9,7 +9,7 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class SuddenPlusTableTest {
+class SuddenPlusTableActivityTest {
 
     @Test fun onCreateTakesInExtrasParameters() {
         val intent = Intent("").apply {
@@ -18,7 +18,7 @@ class SuddenPlusTableTest {
             putExtra("GreenNumber", 310)
         }
 
-        val subject = Robolectric.buildActivity(SuddenPlusTable::class.java, intent)
+        val subject = Robolectric.buildActivity(SuddenPlusTableActivity::class.java, intent)
                 .create().get()
 
         assertThat(subject.tableParams.minBPM, equalTo(144))

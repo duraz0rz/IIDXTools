@@ -1,9 +1,10 @@
-package com.duraz0rz.suddenpluscalculator
+package com.duraz0rz.suddenpluscalculator.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.duraz0rz.suddenpluscalculator.R
 
-class SuddenPlusTable : AppCompatActivity() {
+class SuddenPlusTableActivity : AppCompatActivity() {
     data class SuddenPlusTableParams(val minBPM : Int?, val maxBPM : Int?, val greenNumber : Int?)
 
     lateinit var tableParams : SuddenPlusTableParams

@@ -1,8 +1,9 @@
-package com.duraz0rz.suddenpluscalculator
+package com.duraz0rz.suddenpluscalculator.activities
 
 import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
+import com.duraz0rz.suddenpluscalculator.R
 import com.natpryce.hamkrest.absent
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
@@ -16,15 +17,15 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowApplication
 
 @RunWith(RobolectricTestRunner::class)
-class SuddenPlusInputTest {
-    lateinit private var subject : SuddenPlusInput
+class SuddenPlusInputActivityTest {
+    lateinit private var subject : SuddenPlusInputActivity
     lateinit private var minBpmField : EditText
     lateinit private var maxBpmField : EditText
     lateinit private var greenNumberField : EditText
     lateinit private var calculateButton : Button
 
     @Before fun setup() {
-        subject = Robolectric.setupActivity(SuddenPlusInput::class.java)
+        subject = Robolectric.setupActivity(SuddenPlusInputActivity::class.java)
         minBpmField = subject.findViewById<EditText>(R.id.textMinBPM)
         maxBpmField = subject.findViewById<EditText>(R.id.textMaxBPM)
         greenNumberField = subject.findViewById<EditText>(R.id.textGreenNumber)
@@ -34,7 +35,7 @@ class SuddenPlusInputTest {
     @Test fun testCalculateSuddenPlusNumbersStartsActivityWithCorrectClass() {
         setFieldsAndClick(minBPM = "144", maxBPM = "155", greenNumber = "310")
 
-        val expectedIntent = Intent(subject, SuddenPlusTable::class.java)
+        val expectedIntent = Intent(subject, SuddenPlusTableActivity::class.java)
         val actualIntent = ShadowApplication.getInstance().nextStartedActivity
 
         assertThat(actualIntent.component, equalTo(expectedIntent.component))
