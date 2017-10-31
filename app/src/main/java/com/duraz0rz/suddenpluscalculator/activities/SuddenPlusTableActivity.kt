@@ -2,6 +2,7 @@ package com.duraz0rz.suddenpluscalculator.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -20,26 +21,28 @@ class SuddenPlusTableActivity : AppCompatActivity() {
         val minBPM = intent.getIntExtra("BPM", Int.MIN_VALUE)
         val greenNumber = intent.getIntExtra("GreenNumber", Int.MIN_VALUE)
 
-        val minBPMValues = suddenPlusCalculator.generateSuddenPlusTable(minBPM, greenNumber)
+        val suddenPlusValues = suddenPlusCalculator.generateSuddenPlusTable(minBPM, greenNumber)
 
         val table = this.findViewById<TableLayout>(R.id.tblHiSpeed)
 
-        minBPMValues.map { generateTableRow(it) }.forEach { table.addView(it) }
+        suddenPlusValues.map { generateTableRow(it) }.forEach { table.addView(it) }
     }
 
     private fun generateTableRow(minBPMValue: SuddenPlusValue): TableRow {
+        fun generateTableCell(text: String): TextView {
+            val cell = TextView(this)
+            cell.text = text
+            cell.gravity = Gravity.CENTER
+            cell.setPadding(0, 16,0,16)
+
+            return cell
+        }
+
         val tableRow = TableRow(this)
 
-        val hiSpeedCell = TextView(this)
-        hiSpeedCell.text = minBPMValue.highSpeed
-        val minBPMCell = TextView(this)
-        minBPMCell.text = minBPMValue.whiteNumber.toString()
-        val maxBPMCell = TextView(this)
-        maxBPMCell.text = ""
-
-        tableRow.addView(hiSpeedCell)
-        tableRow.addView(minBPMCell)
-        tableRow.addView(maxBPMCell)
+        tableRow.addView(generateTableCell(minBPMValue.highSpeed))
+        tableRow.addView(generateTableCell(minBPMValue.whiteNumber.toString()))
+        tableRow.addView(generateTableCell(""))
 
         return tableRow
     }

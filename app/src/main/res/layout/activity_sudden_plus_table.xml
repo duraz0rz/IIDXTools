@@ -7,31 +7,38 @@
     android:layout_height="match_parent"
     tools:context="com.duraz0rz.suddenpluscalculator.activities.SuddenPlusTableActivity">
 
-    <TableLayout
-        android:id="@+id/tblHiSpeed"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="*">
+        android:layout_height="match_parent">
 
-        <TableRow>
-            <TextView
-                android:id="@+id/txtHiSpeedHeader"
-                android:text="@string/hiSpeedHeader"
-                android:gravity="center"
-                android:padding="3dp" />
+        <TableLayout
+            android:id="@+id/tblHiSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
 
-            <TextView
-                android:id="@+id/txtMinBPMHeader"
-                android:text="@string/minBPMHeaderPlaceholder"
-                android:gravity="center"
-                android:padding="3dp" />
+            <TableRow>
 
-            <TextView
-                android:id="@+id/txtMaxBPMHeader"
-                android:text="@string/maxBPMHeaderPlaceholder"
-                android:gravity="center"
-                android:padding="3dp" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:id="@+id/txtHiSpeedHeader"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="@string/hiSpeedHeader" />
+
+                <TextView
+                    android:id="@+id/txtMinBPMHeader"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="@string/minBPMHeaderPlaceholder" />
+
+                <TextView
+                    android:id="@+id/txtMaxBPMHeader"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="@string/maxBPMHeaderPlaceholder" />
+            </TableRow>
+        </TableLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
