@@ -1,5 +1,7 @@
 package com.duraz0rz.suddenpluscalculator
 
+import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
+
 class SuddenPlusCalculator {
 
     private val highSpeedValues = listOf(0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.25, 3.5, 3.75, 4.0)

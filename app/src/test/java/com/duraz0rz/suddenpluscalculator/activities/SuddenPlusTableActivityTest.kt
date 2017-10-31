@@ -6,7 +6,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import com.duraz0rz.suddenpluscalculator.R
 import com.duraz0rz.suddenpluscalculator.SuddenPlusCalculator
-import com.duraz0rz.suddenpluscalculator.SuddenPlusValue
+import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.nhaarman.mockito_kotlin.mock
