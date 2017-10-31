@@ -1,4 +1,4 @@
-package com.duraz0rz.suddenpluscalculator
+package com.duraz0rz.suddenpluscalculator.helpers
 
 import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
 
