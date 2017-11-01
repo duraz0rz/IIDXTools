@@ -1,4 +1,4 @@
-package com.duraz0rz.suddenpluscalculator.activities
+package com.duraz0rz.iidxtools.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.view.Gravity
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import com.duraz0rz.suddenpluscalculator.R
-import com.duraz0rz.suddenpluscalculator.helpers.SuddenPlusCalculator
-import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.R
+import com.duraz0rz.iidxtools.helpers.SuddenPlusCalculator
+import com.duraz0rz.iidxtools.dataClasses.SuddenPlusValue
 
 class SuddenPlusTableActivity : AppCompatActivity() {
 

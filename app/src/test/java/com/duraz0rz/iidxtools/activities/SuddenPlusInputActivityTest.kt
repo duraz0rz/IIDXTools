@@ -1,9 +1,9 @@
-package com.duraz0rz.suddenpluscalculator.activities
+package com.duraz0rz.iidxtools.activities
 
 import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
-import com.duraz0rz.suddenpluscalculator.R
+import com.duraz0rz.iidxtools.R
 import com.natpryce.hamkrest.*
 import com.natpryce.hamkrest.assertion.assertThat
 import org.junit.Before
