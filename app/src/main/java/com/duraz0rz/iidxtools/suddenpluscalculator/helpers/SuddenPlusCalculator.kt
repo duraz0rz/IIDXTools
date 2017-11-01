@@ -1,6 +1,6 @@
-package com.duraz0rz.suddenpluscalculator.helpers
+package com.duraz0rz.iidxtools.suddenpluscalculator.helpers
 
-import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.suddenpluscalculator.dataClasses.SuddenPlusValue
 
 class SuddenPlusCalculator {
 

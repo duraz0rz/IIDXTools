@@ -1,12 +1,12 @@
-package com.duraz0rz.suddenpluscalculator.activities
+package com.duraz0rz.iidxtools.suddenpluscalculator.activities
 
 import android.content.Intent
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import com.duraz0rz.suddenpluscalculator.R
-import com.duraz0rz.suddenpluscalculator.helpers.SuddenPlusCalculator
-import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.R
+import com.duraz0rz.iidxtools.suddenpluscalculator.helpers.SuddenPlusCalculator
+import com.duraz0rz.iidxtools.suddenpluscalculator.dataClasses.SuddenPlusValue
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isEmptyString

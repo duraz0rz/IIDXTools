@@ -1,11 +1,11 @@
-package com.duraz0rz.suddenpluscalculator.activities
+package com.duraz0rz.iidxtools.suddenpluscalculator.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import com.duraz0rz.suddenpluscalculator.R
+import com.duraz0rz.iidxtools.R
 import java.lang.Integer.parseInt
 
 class SuddenPlusInputActivity : AppCompatActivity() {
