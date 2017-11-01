@@ -50,7 +50,9 @@ class SuddenPlusInputActivity : AppCompatActivity() {
         if (!hasErrors) {
             val calculateIntent = Intent(this, SuddenPlusTableActivity::class.java).apply {
                 putExtra("BPM", minBPM)
-                putExtra("MaxBPM", maxBPM)
+                if (maxBPM != null) {
+                    putExtra("MaxBPM", maxBPM)
+                }
                 putExtra("GreenNumber", greenNumber)
             }
             startActivity(calculateIntent)

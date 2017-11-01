@@ -4,11 +4,8 @@ import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
 import com.duraz0rz.suddenpluscalculator.R
-import com.natpryce.hamkrest.absent
+import com.natpryce.hamkrest.*
 import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import com.natpryce.hamkrest.isNullOrEmptyString
-import com.natpryce.hamkrest.present
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,10 +23,10 @@ class SuddenPlusInputActivityTest {
 
     @Before fun setup() {
         subject = Robolectric.setupActivity(SuddenPlusInputActivity::class.java)
-        minBpmField = subject.findViewById<EditText>(R.id.textMinBPM)
-        maxBpmField = subject.findViewById<EditText>(R.id.textMaxBPM)
-        greenNumberField = subject.findViewById<EditText>(R.id.textGreenNumber)
-        calculateButton = subject.findViewById<Button>(R.id.btnCalculate)
+        minBpmField = subject.findViewById(R.id.textMinBPM)
+        maxBpmField = subject.findViewById(R.id.textMaxBPM)
+        greenNumberField = subject.findViewById(R.id.textGreenNumber)
+        calculateButton = subject.findViewById(R.id.btnCalculate)
     }
 
     @Test fun testCalculateSuddenPlusNumbersStartsActivityWithCorrectClass() {
@@ -121,9 +118,17 @@ class SuddenPlusInputActivityTest {
         assertThat(maxBpmField.error.toString(), equalTo("Max BPM must be greater than min BPM!"))
     }
 
-    private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String = "0", greenNumber: String = "0") {
+    @Test fun testCalculateSuddenPlusNumbersDoesNotSetMaxBPMIfNotPresent() {
+        setFieldsAndClick(minBPM = "150", greenNumber = "300")
+
+        assertThat(ShadowApplication.getInstance().nextStartedActivity.extras.keySet(), !hasElement("MaxBPM"))
+    }
+
+    private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String? = null, greenNumber: String = "0") {
         minBpmField.setText(minBPM)
-        maxBpmField.setText(maxBPM)
+        if (maxBPM != null) {
+            maxBpmField.setText(maxBPM)
+        }
         greenNumberField.setText(greenNumber)
         calculateButton.performClick()
     }

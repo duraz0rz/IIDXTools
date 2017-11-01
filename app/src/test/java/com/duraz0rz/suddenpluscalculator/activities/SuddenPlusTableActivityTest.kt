@@ -9,9 +9,9 @@ import com.duraz0rz.suddenpluscalculator.helpers.SuddenPlusCalculator
 import com.duraz0rz.suddenpluscalculator.dataClasses.SuddenPlusValue
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import com.natpryce.hamkrest.isEmptyString
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -29,20 +29,14 @@ class SuddenPlusTableActivityTest {
     private val maxBPM = 160
     private val greenNumber = 310
 
-    @Before fun setup() {
+    @Test fun onCreateGeneratesRowsForEachValueReturned() {
         val intent = Intent("").apply {
             putExtra("BPM", minBPM)
-            putExtra("MaxBPM", maxBPM)
             putExtra("GreenNumber", greenNumber)
         }
 
-        mockSuddenPlusCalculator = mock()
-        activityController = Robolectric.buildActivity(SuddenPlusTableActivity::class.java, intent)
-        subject = activityController.get()
-        subject.suddenPlusCalculator = mockSuddenPlusCalculator
-    }
+        setupActivity(intent)
 
-    @Test fun onCreateGeneratesRowsForEachValueReturned() {
         whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber)).thenReturn(listOf(
                 SuddenPlusValue("4.00", minWhiteNumber = 55),
                 SuddenPlusValue("3.75", minWhiteNumber = 44)
@@ -55,13 +49,45 @@ class SuddenPlusTableActivityTest {
         assertThat(hiSpeed400Row.childCount, equalTo(3))
         assertThat((hiSpeed400Row.getChildAt(0) as TextView).text.toString(), equalTo("4.00"))
         assertThat((hiSpeed400Row.getChildAt(1) as TextView).text.toString(), equalTo("55"))
-        assertThat((hiSpeed400Row.getChildAt(2) as TextView).text.toString(), equalTo(""))
+        assertThat((hiSpeed400Row.getChildAt(2) as TextView).text.toString(), isEmptyString)
 
         val hiSpeed375Row = table.getChildAt(2) as TableRow
         assertThat(hiSpeed375Row.childCount, equalTo(3))
         assertThat((hiSpeed375Row.getChildAt(0) as TextView).text.toString(), equalTo("3.75"))
         assertThat((hiSpeed375Row.getChildAt(1) as TextView).text.toString(), equalTo("44"))
-        assertThat((hiSpeed375Row.getChildAt(2) as TextView).text.toString(), equalTo(""))
+        assertThat((hiSpeed375Row.getChildAt(2) as TextView).text.toString(), isEmptyString)
     }
 
+    @Test fun onCreateFillsInMaxBPMValueWhenMaxWhiteNumberIsPresent() {
+        val intent = Intent("").apply {
+            putExtra("BPM", minBPM)
+            putExtra("MaxBPM", maxBPM)
+            putExtra("GreenNumber", greenNumber)
+        }
+
+        setupActivity(intent)
+
+        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, maxBpm = maxBPM, greenNumber = greenNumber)).thenReturn(listOf(
+                SuddenPlusValue("4.00", minWhiteNumber = 66, maxWhiteNumber = 132),
+                SuddenPlusValue("3.75", minWhiteNumber = 55, maxWhiteNumber = 111)
+        ))
+
+        activityController.create()
+        val table = subject.findViewById<TableLayout>(R.id.tblHiSpeed)
+
+        val hiSpeed400Row = table.getChildAt(1) as TableRow
+        assertThat(hiSpeed400Row.childCount, equalTo(3))
+        assertThat((hiSpeed400Row.getChildAt(2) as TextView).text.toString(), equalTo("132"))
+
+        val hiSpeed375Row = table.getChildAt(2) as TableRow
+        assertThat(hiSpeed375Row.childCount, equalTo(3))
+        assertThat((hiSpeed375Row.getChildAt(2) as TextView).text.toString(), equalTo("111"))
+    }
+
+    private fun setupActivity(intent: Intent) {
+        mockSuddenPlusCalculator = mock()
+        activityController = Robolectric.buildActivity(SuddenPlusTableActivity::class.java, intent)
+        subject = activityController.get()
+        subject.suddenPlusCalculator = mockSuddenPlusCalculator
+    }
 }
