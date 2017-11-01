@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.duraz0rz.iidxtools.activities.SuddenPlusInputActivity">
+    tools:context="com.duraz0rz.iidxtools.suddenpluscalculator.activities.SuddenPlusInputActivity">
 
     <EditText
         android:id="@+id/textMinBPM"

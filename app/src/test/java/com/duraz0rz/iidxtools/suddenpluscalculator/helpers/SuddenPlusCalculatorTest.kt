@@ -1,6 +1,6 @@
-package com.duraz0rz.iidxtools.helpers
+package com.duraz0rz.iidxtools.suddenpluscalculator.helpers
 
-import com.duraz0rz.iidxtools.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.suddenpluscalculator.dataClasses.SuddenPlusValue
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.closeTo
 import com.natpryce.hamkrest.equalTo
