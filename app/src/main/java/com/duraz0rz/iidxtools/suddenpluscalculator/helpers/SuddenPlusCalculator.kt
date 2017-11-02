@@ -14,19 +14,18 @@ class SuddenPlusCalculator {
         if (maxBpm != null) {
             return highSpeedValues.map {
                 SuddenPlusValue(
-                        highSpeed = "%.2f".format(it),
-                        minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber)),
-                        maxWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = maxBpm, greenNumber = greenNumber))
+                    highSpeed = "%.2f".format(it),
+                    minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber)),
+                    maxWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = maxBpm, greenNumber = greenNumber))
                 )
             }
         } else {
             return highSpeedValues.map {
                 SuddenPlusValue(
-                        highSpeed = "%.2f".format(it),
-                        minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber))
+                    highSpeed = "%.2f".format(it),
+                    minWhiteNumber = Math.round(calculateSuddenPlus(hiSpeed = it, bpm = bpm, greenNumber = greenNumber))
                 )
             }
         }
-
     }
 }
