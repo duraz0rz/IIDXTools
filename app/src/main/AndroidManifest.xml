@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.duraz0rz.iidxtools.suddenpluscalculator.activities.SuddenPlusTableActivity" android:parentActivityName="com.duraz0rz.iidxtools.suddenpluscalculator.activities.SuddenPlusInputActivity" />
+        <activity
+            android:name="com.duraz0rz.iidxtools.suddenpluscalculator.activities.SuddenPlusTableActivity"
+            android:parentActivityName="com.duraz0rz.iidxtools.suddenpluscalculator.activities.SuddenPlusInputActivity" />
     </application>
 
 </manifest>

@@ -1,14 +1,14 @@
 package com.duraz0rz.iidxtools.suddenpluscalculator.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import com.duraz0rz.iidxtools.R
-import com.duraz0rz.iidxtools.suddenpluscalculator.helpers.SuddenPlusCalculator
 import com.duraz0rz.iidxtools.suddenpluscalculator.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.suddenpluscalculator.helpers.SuddenPlusCalculator
 
 class SuddenPlusTableActivity : AppCompatActivity() {
 
@@ -37,7 +37,7 @@ class SuddenPlusTableActivity : AppCompatActivity() {
             val cell = TextView(this)
             cell.text = text
             cell.gravity = Gravity.CENTER
-            cell.setPadding(0, 16,0,16)
+            cell.setPadding(0, 16, 0, 16)
 
             return cell
         }

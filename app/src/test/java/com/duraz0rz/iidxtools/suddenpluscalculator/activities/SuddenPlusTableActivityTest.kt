@@ -5,8 +5,8 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import com.duraz0rz.iidxtools.R
-import com.duraz0rz.iidxtools.suddenpluscalculator.helpers.SuddenPlusCalculator
 import com.duraz0rz.iidxtools.suddenpluscalculator.dataClasses.SuddenPlusValue
+import com.duraz0rz.iidxtools.suddenpluscalculator.helpers.SuddenPlusCalculator
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isEmptyString
@@ -29,7 +29,8 @@ class SuddenPlusTableActivityTest {
     private val maxBPM = 160
     private val greenNumber = 310
 
-    @Test fun onCreateGeneratesRowsForEachValueReturned() {
+    @Test
+    fun onCreateGeneratesRowsForEachValueReturned() {
         val intent = Intent("").apply {
             putExtra("BPM", minBPM)
             putExtra("GreenNumber", greenNumber)
@@ -38,8 +39,8 @@ class SuddenPlusTableActivityTest {
         setupActivity(intent)
 
         whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber)).thenReturn(listOf(
-                SuddenPlusValue("4.00", minWhiteNumber = 55),
-                SuddenPlusValue("3.75", minWhiteNumber = 44)
+            SuddenPlusValue("4.00", minWhiteNumber = 55),
+            SuddenPlusValue("3.75", minWhiteNumber = 44)
         ))
 
         activityController.create()
@@ -58,7 +59,8 @@ class SuddenPlusTableActivityTest {
         assertThat((hiSpeed375Row.getChildAt(2) as TextView).text.toString(), isEmptyString)
     }
 
-    @Test fun onCreateFillsInMaxBPMValueWhenMaxWhiteNumberIsPresent() {
+    @Test
+    fun onCreateFillsInMaxBPMValueWhenMaxWhiteNumberIsPresent() {
         val intent = Intent("").apply {
             putExtra("BPM", minBPM)
             putExtra("MaxBPM", maxBPM)
@@ -68,8 +70,8 @@ class SuddenPlusTableActivityTest {
         setupActivity(intent)
 
         whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, maxBpm = maxBPM, greenNumber = greenNumber)).thenReturn(listOf(
-                SuddenPlusValue("4.00", minWhiteNumber = 66, maxWhiteNumber = 132),
-                SuddenPlusValue("3.75", minWhiteNumber = 55, maxWhiteNumber = 111)
+            SuddenPlusValue("4.00", minWhiteNumber = 66, maxWhiteNumber = 132),
+            SuddenPlusValue("3.75", minWhiteNumber = 55, maxWhiteNumber = 111)
         ))
 
         activityController.create()

@@ -4,8 +4,12 @@ import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
 import com.duraz0rz.iidxtools.R
-import com.natpryce.hamkrest.*
+import com.natpryce.hamkrest.absent
 import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
+import com.natpryce.hamkrest.hasElement
+import com.natpryce.hamkrest.isNullOrEmptyString
+import com.natpryce.hamkrest.present
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,13 +19,14 @@ import org.robolectric.shadows.ShadowApplication
 
 @RunWith(RobolectricTestRunner::class)
 class SuddenPlusInputActivityTest {
-    lateinit private var subject : SuddenPlusInputActivity
-    lateinit private var minBpmField : EditText
-    lateinit private var maxBpmField : EditText
-    lateinit private var greenNumberField : EditText
-    lateinit private var calculateButton : Button
+    lateinit private var subject: SuddenPlusInputActivity
+    lateinit private var minBpmField: EditText
+    lateinit private var maxBpmField: EditText
+    lateinit private var greenNumberField: EditText
+    lateinit private var calculateButton: Button
 
-    @Before fun setup() {
+    @Before
+    fun setup() {
         subject = Robolectric.setupActivity(SuddenPlusInputActivity::class.java)
         minBpmField = subject.findViewById(R.id.textMinBPM)
         maxBpmField = subject.findViewById(R.id.textMaxBPM)
@@ -29,7 +34,8 @@ class SuddenPlusInputActivityTest {
         calculateButton = subject.findViewById(R.id.btnCalculate)
     }
 
-    @Test fun testCalculateSuddenPlusNumbersStartsActivityWithCorrectClass() {
+    @Test
+    fun testCalculateSuddenPlusNumbersStartsActivityWithCorrectClass() {
         setFieldsAndClick(minBPM = "144", maxBPM = "155", greenNumber = "310")
 
         val expectedIntent = Intent(subject, SuddenPlusTableActivity::class.java)
@@ -38,7 +44,8 @@ class SuddenPlusInputActivityTest {
         assertThat(actualIntent.component, equalTo(expectedIntent.component))
     }
 
-    @Test fun testCalculateSuddenPlusNumbersAddsMinBPMToIntent() {
+    @Test
+    fun testCalculateSuddenPlusNumbersAddsMinBPMToIntent() {
         val expectedBPM = 144
         setFieldsAndClick(minBPM = expectedBPM.toString(), maxBPM = "144")
 
@@ -50,7 +57,8 @@ class SuddenPlusInputActivityTest {
         assertThat(actualBPM, equalTo(expectedBPM))
     }
 
-    @Test fun testCalculateSuddenPlusNumbersSetsErrorOnMinBPMIfBlank() {
+    @Test
+    fun testCalculateSuddenPlusNumbersSetsErrorOnMinBPMIfBlank() {
         setFieldsAndClick(minBPM = "")
 
         val editView = minBpmField
@@ -61,7 +69,8 @@ class SuddenPlusInputActivityTest {
         assertThat(editView.error.toString(), equalTo(expectedError))
     }
 
-    @Test fun testCalculateSuddenPlusNumberAddsGreenNumberToIntent() {
+    @Test
+    fun testCalculateSuddenPlusNumberAddsGreenNumberToIntent() {
         val expectedGreenNumber = 310
 
         setFieldsAndClick(greenNumber = expectedGreenNumber.toString())
@@ -71,7 +80,8 @@ class SuddenPlusInputActivityTest {
         assertThat(actualGreenNumber, equalTo(expectedGreenNumber))
     }
 
-    @Test fun testCalculateSuddenPlusNumberSetsErrorOnGreenNumberIfBlank() {
+    @Test
+    fun testCalculateSuddenPlusNumberSetsErrorOnGreenNumberIfBlank() {
         setFieldsAndClick(greenNumber = "")
 
         val editView = greenNumberField
@@ -82,7 +92,8 @@ class SuddenPlusInputActivityTest {
         assertThat(editView.error.toString(), equalTo(expectedError))
     }
 
-    @Test fun testCalculateSuddenPlusNumberSetsErrorOnBothFieldsIfBothAreBlank() {
+    @Test
+    fun testCalculateSuddenPlusNumberSetsErrorOnBothFieldsIfBothAreBlank() {
         setFieldsAndClick(minBPM = "", greenNumber = "")
 
         val minBPMEditView = minBpmField
@@ -93,7 +104,8 @@ class SuddenPlusInputActivityTest {
         assertThat(greenNumberEditView.error, !isNullOrEmptyString)
     }
 
-    @Test fun testCalculateSuddenPlusNumberAddsMaxBPMToIntent() {
+    @Test
+    fun testCalculateSuddenPlusNumberAddsMaxBPMToIntent() {
         val expectedMaxBPM = 150
         setFieldsAndClick(maxBPM = expectedMaxBPM.toString())
 
@@ -102,7 +114,8 @@ class SuddenPlusInputActivityTest {
         assertThat(actualMaxBPM, equalTo(expectedMaxBPM))
     }
 
-    @Test fun testCalculateSuddenPlusNumberDoesNotSetErrorOnMaxBPMIfBlank() {
+    @Test
+    fun testCalculateSuddenPlusNumberDoesNotSetErrorOnMaxBPMIfBlank() {
         minBpmField.setText("150")
         greenNumberField.setText("310")
         calculateButton.performClick()
@@ -111,14 +124,16 @@ class SuddenPlusInputActivityTest {
         assertThat(maxBpmField.error, absent())
     }
 
-    @Test fun testCalculateSuddenPlusNumberSetsErrorOnMaxBPMIfItIsSmallerThanMinBPM() {
+    @Test
+    fun testCalculateSuddenPlusNumberSetsErrorOnMaxBPMIfItIsSmallerThanMinBPM() {
         setFieldsAndClick(minBPM = "150", maxBPM = "140", greenNumber = "310")
 
         assertThat(ShadowApplication.getInstance().nextStartedActivity, absent())
         assertThat(maxBpmField.error.toString(), equalTo("Max BPM must be greater than min BPM!"))
     }
 
-    @Test fun testCalculateSuddenPlusNumbersDoesNotSetMaxBPMIfNotPresent() {
+    @Test
+    fun testCalculateSuddenPlusNumbersDoesNotSetMaxBPMIfNotPresent() {
         setFieldsAndClick(minBPM = "150", greenNumber = "300")
 
         assertThat(ShadowApplication.getInstance().nextStartedActivity.extras.keySet(), !hasElement("MaxBPM"))
