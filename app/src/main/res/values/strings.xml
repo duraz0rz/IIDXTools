@@ -8,4 +8,5 @@
     <string name="hiSpeedHeader">Hi-speeds</string>
     <string name="minBPMHeaderPlaceholder">Min BPM</string>
     <string name="maxBPMHeaderPlaceholder">Max BPM</string>
+    <string name="error_MaxBPMLessThanMinBPM">"Max BPM must be greater than min BPM!"</string>
 </resources>
