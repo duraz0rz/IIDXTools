@@ -8,6 +8,7 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.hasErrorText
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
@@ -70,6 +71,15 @@ class SuddenPlusInputInstrumentedTest {
         calculateButton.perform(closeSoftKeyboard(), click())
 
         maxBpmField.check(matches(hasErrorText("Max BPM must be greater than min BPM!")))
+    }
+
+    @Test
+    fun canScrollToCalculateButtonWhenKeyboardIsUp() {
+        minBpmField.perform(typeText("123"))
+        greenNumberField.perform(typeText("333"))
+        calculateButton.perform(click())
+
+        onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
     }
 
     private fun checkFirstRow(position: Int, text: String) {
