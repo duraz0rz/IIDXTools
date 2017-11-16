@@ -13,6 +13,7 @@ android {
         versionCode 'git rev-list --count HEAD'.execute().text.toInteger()
         versionName "${version}-${'git rev-list --max-count=1 --abbrev-commit HEAD'.execute().text.trim()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
     signingConfigs {
         release {
