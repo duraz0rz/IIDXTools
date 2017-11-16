@@ -6,6 +6,11 @@ apply plugin: 'com.github.triplet.play'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    playAccountConfigs {
+        defaultConfig {
+            jsonFile = file('play.json')
+        }
+    }
     defaultConfig {
         applicationId "com.duraz0rz.iidxtools"
         minSdkVersion 26
@@ -21,11 +26,6 @@ android {
             storePassword System.getenv('KEY_STORE_PASSWORD')
             keyAlias System.getenv('KEY_ALIAS')
             keyPassword System.getenv('KEY_PASSWORD')
-        }
-    }
-    playAccountConfigs {
-        defaultConfig {
-            jsonFile = file('play.json')
         }
     }
     buildTypes {
