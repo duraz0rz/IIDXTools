@@ -41,6 +41,9 @@ jobs:
       ANDROID_SDK_ROOT: /opt/android/sdk
     steps:
       - run:
+          name: Write Google Play JSON to disk
+          command: echo $SERVICE_ACCOUNT_JSON > ~/code/app/play.json
+      - run:
           name: Deploy to alpha
           command: ./gradlew publishApkRelease
 
