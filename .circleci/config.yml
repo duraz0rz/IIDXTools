@@ -49,6 +49,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Write Google Play JSON to disk
           command: echo $SERVICE_ACCOUNT_JSON > ~/code/app/play.json
