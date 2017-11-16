@@ -44,12 +44,12 @@ jobs:
           name: Write Google Play JSON to disk
           command: echo $SERVICE_ACCOUNT_JSON > ~/code/app/play.json
       - run:
-          name: Deploy to alpha
+          name: Deploy to beta
           command: ./gradlew publishApkRelease
 
 workflows:
   version: 2
-  build-and-deploy:
+  build_and_deploy:
     jobs:
       - build
       - deploy:
