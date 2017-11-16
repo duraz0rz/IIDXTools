@@ -39,6 +39,7 @@ jobs:
           root: ~/code
           paths:
             - app/*
+            - gradle/*
             - build.gradle
             - gradle.properties
             - gradlew
