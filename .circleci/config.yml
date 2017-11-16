@@ -35,21 +35,11 @@ jobs:
           destination: apk
       - store_test_results:
           path: app/build/test-results/
-      - persist_to_workspace:
-          root: ~/code
-          paths:
-            - app/*
-            - gradle/*
-            - build.gradle
-            - gradle.properties
-            - gradlew
-            - settings.gradle
 
   deploy:
     <<: *env-defaults
     steps:
-      - attach_workspace:
-          at: ~/code
+      - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
