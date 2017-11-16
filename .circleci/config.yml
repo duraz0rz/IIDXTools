@@ -36,7 +36,13 @@ jobs:
       - store_test_results:
           path: app/build/test-results/
       - persist_to_workspace:
-          root: .
+          root: ~/code
+          paths:
+            - app/*
+            - build.gradle
+            - gradle.properties
+            - gradlew
+            - settings.gradle
 
   deploy:
     <<: *env-defaults
