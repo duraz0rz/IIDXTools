@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sudden+ Calculator</string>
+    <string name="app_name">IIDX Tools</string>
     <string name="minBpm">Min BPM (or BPM of song)</string>
     <string name="maxBpm">Max BPM</string>
     <string name="greenNumber">Green Number</string>

@@ -1,22 +1,38 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.triplet.play'
 
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    playAccountConfigs {
+        defaultConfig {
+            jsonFile = file('play.json')
+        }
+    }
     defaultConfig {
         applicationId "com.duraz0rz.iidxtools"
         minSdkVersion 26
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 'git rev-list --count HEAD'.execute().text.toInteger()
+        versionName "${version}-${'git rev-list --max-count=1 --abbrev-commit HEAD'.execute().text.trim()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        playAccountConfig = playAccountConfigs.defaultConfig
+    }
+    signingConfigs {
+        release {
+            storeFile file('upload-key.jks')
+            storePassword System.getenv('KEY_STORE_PASSWORD')
+            keyAlias System.getenv('KEY_ALIAS')
+            keyPassword System.getenv('KEY_PASSWORD')
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     testOptions {
@@ -24,6 +40,10 @@ android {
             includeAndroidResources = true
         }
     }
+}
+
+play {
+    track = 'beta'
 }
 
 dependencies {
