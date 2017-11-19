@@ -9,45 +9,27 @@ import com.duraz0rz.iidxtools.R
 import java.lang.Integer.parseInt
 
 class SuddenPlusInputActivity : AppCompatActivity() {
-    data class FieldValidation(val field: EditText, val errorText: String)
+    private lateinit var minBPMField: EditText
+    private lateinit var maxBPMField: EditText
+    private lateinit var greenNumberField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sudden_plus_input)
+
+        minBPMField = findViewById(R.id.textMinBPM)
+        maxBPMField = findViewById(R.id.textMaxBPM)
+        greenNumberField = findViewById(R.id.textGreenNumber)
     }
 
     fun calculateSuddenPlusNumbers(view: View) {
-        var hasErrors = false
-        val minBPMField = findViewById<EditText>(R.id.textMinBPM)
-        val maxBPMField = findViewById<EditText>(R.id.textMaxBPM)
-        val greenNumberField = findViewById<EditText>(R.id.textGreenNumber)
-
-        val minBPM = parseFieldForPotentialNumber(minBPMField)
-        val maxBPM = parseFieldForPotentialNumber(maxBPMField)
-        val greenNumber = parseFieldForPotentialNumber(greenNumberField)
-
-        fun checkForEmptyFields(vararg fields: FieldValidation) {
-            fields.filter { it.field.text.isNullOrEmpty() }.forEach {
-                hasErrors = true
-                it.field.error = it.errorText
-            }
-        }
-
-        fun checkIfMaxBPMIsGreaterThanMinBPM(minBPM: Int?, maxBPM: Int?) {
-            if (minBPM != null && maxBPM != null && maxBPM < minBPM) {
-                hasErrors = true
-                maxBPMField.error = "Max BPM must be greater than min BPM!"
-            }
-        }
-
-        checkForEmptyFields(
-            FieldValidation(minBPMField, "Must enter a BPM number!"),
-            FieldValidation(greenNumberField, "Must enter a green number!")
-        )
-
-        checkIfMaxBPMIsGreaterThanMinBPM(minBPM, maxBPM)
+        val hasErrors = minBpmIsEmpty() or greenNumberIsEmpty() or maxBpmIsGreaterThanMinBpm()
 
         if (!hasErrors) {
+            val minBPM = parseInt(minBPMField.text.toString())
+            val maxBPM = if (maxBPMField.text.isNullOrEmpty()) null else parseInt(maxBPMField.text.toString())
+            val greenNumber = parseInt(greenNumberField.text.toString())
+
             val calculateIntent = Intent(this, SuddenPlusTableActivity::class.java).apply {
                 putExtra("BPM", minBPM)
                 if (maxBPM != null) {
@@ -59,7 +41,39 @@ class SuddenPlusInputActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseFieldForPotentialNumber(field: EditText): Int? {
-        return if (field.text.isNullOrEmpty()) null else parseInt(field.text.toString())
+    private fun minBpmIsEmpty(): Boolean {
+        val minBpmField = findViewById<EditText>(R.id.textMinBPM)
+        val hasErrors = fieldIsEmpty(minBpmField)
+        if (hasErrors) {
+            minBpmField.error = "Must enter a BPM number!"
+        }
+        return hasErrors
+    }
+
+    private fun greenNumberIsEmpty(): Boolean {
+        val greenNumberField = findViewById<EditText>(R.id.textGreenNumber)
+        val hasErrors = fieldIsEmpty(greenNumberField)
+        if (hasErrors) {
+            greenNumberField.error = "Must enter a green number!"
+        }
+        return hasErrors
+    }
+    
+    private fun maxBpmIsGreaterThanMinBpm(): Boolean {
+        var hasErrors = false
+
+        if (!minBPMField.text.isNullOrEmpty() and !maxBPMField.text.isNullOrEmpty()) {
+            val minBpm = parseInt(minBPMField.text.toString())
+            val maxBpm = parseInt(maxBPMField.text.toString())
+            if (minBpm > maxBpm) {
+                hasErrors = true
+                maxBPMField.error = "Max BPM must be greater than min BPM!"
+            }
+        }
+        return hasErrors
+    }
+
+    private fun fieldIsEmpty(field: EditText): Boolean {
+        return field.text.isNullOrEmpty()
     }
 }
