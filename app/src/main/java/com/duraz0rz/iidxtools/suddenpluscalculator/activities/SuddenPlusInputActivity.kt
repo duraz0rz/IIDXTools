@@ -3,8 +3,10 @@ package com.duraz0rz.iidxtools.suddenpluscalculator.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import com.duraz0rz.iidxtools.R
 import java.lang.Integer.parseInt
 
@@ -20,6 +22,12 @@ class SuddenPlusInputActivity : AppCompatActivity() {
         minBPMField = findViewById(R.id.textMinBPM)
         maxBPMField = findViewById(R.id.textMaxBPM)
         greenNumberField = findViewById(R.id.textGreenNumber)
+
+        greenNumberField.setOnEditorActionListener { textView, _, _ ->
+            calculateSuddenPlusNumbers(textView)
+            true
+        }
+
     }
 
     fun calculateSuddenPlusNumbers(view: View) {

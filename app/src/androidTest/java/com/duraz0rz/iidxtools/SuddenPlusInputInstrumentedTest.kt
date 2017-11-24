@@ -3,6 +3,7 @@ package com.duraz0rz.iidxtools
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
+import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.hasErrorText
@@ -78,6 +79,16 @@ class SuddenPlusInputInstrumentedTest {
         minBpmField.perform(typeText("123"))
         greenNumberField.perform(typeText("333"))
         calculateButton.perform(click())
+
+        onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
+    }
+
+
+    @Test
+    fun theSuddenPlusNumbersAreCalculatedWhenTheEnterKeyIsPressedOnTheGreenNumberField() {
+        minBpmField.perform(typeText("123"))
+        greenNumberField.perform(typeText("123"))
+        greenNumberField.perform(pressImeActionButton())
 
         onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
     }

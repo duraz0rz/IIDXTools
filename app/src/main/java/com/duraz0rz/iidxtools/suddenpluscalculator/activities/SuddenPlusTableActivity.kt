@@ -14,9 +14,15 @@ class SuddenPlusTableActivity : AppCompatActivity() {
 
     var suddenPlusCalculator = SuddenPlusCalculator()
 
+    private lateinit var minBpmHeader: TextView
+    private lateinit var maxBpmHeader: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sudden_plus_table)
+
+        minBpmHeader = findViewById(R.id.txtMinBPMHeader)
+        maxBpmHeader = findViewById(R.id.txtMaxBPMHeader)
 
         val minBPM = intent.getIntExtra("BPM", Int.MIN_VALUE)
         var maxBPM: Int? = null
@@ -25,6 +31,18 @@ class SuddenPlusTableActivity : AppCompatActivity() {
         }
         val greenNumber = intent.getIntExtra("GreenNumber", Int.MIN_VALUE)
 
+        setHeaderRow(minBPM, maxBPM)
+        createHighSpeedTable(minBPM, greenNumber, maxBPM)
+    }
+
+    private fun setHeaderRow(minBPM: Int, maxBPM: Int?) {
+        minBpmHeader.text = resources.getString(R.string.bpmHeader, minBPM)
+        if (maxBPM != null) {
+            maxBpmHeader.text = resources.getString(R.string.bpmHeader, maxBPM)
+        }
+    }
+
+    private fun createHighSpeedTable(minBPM: Int, greenNumber: Int, maxBPM: Int? = null) {
         val suddenPlusValues = suddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, maxBpm = maxBPM, greenNumber = greenNumber)
 
         val table = this.findViewById<TableLayout>(R.id.tblHiSpeed)

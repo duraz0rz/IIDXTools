@@ -27,14 +27,12 @@
                 <TextView
                     android:id="@+id/txtMinBPMHeader"
                     android:gravity="center"
-                    android:padding="3dp"
-                    android:text="@string/minBPMHeaderPlaceholder" />
+                    android:padding="3dp" />
 
                 <TextView
                     android:id="@+id/txtMaxBPMHeader"
                     android:gravity="center"
-                    android:padding="3dp"
-                    android:text="@string/maxBPMHeaderPlaceholder" />
+                    android:padding="3dp" />
             </TableRow>
         </TableLayout>
 
