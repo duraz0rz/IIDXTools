@@ -1,8 +1,10 @@
 package com.duraz0rz.iidxtools
 
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
+import android.support.test.espresso.action.ViewActions.pressBack
 import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
@@ -10,6 +12,7 @@ import android.support.test.espresso.matcher.ViewMatchers.hasErrorText
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
@@ -91,6 +94,34 @@ class SuddenPlusInputInstrumentedTest {
         greenNumberField.perform(pressImeActionButton())
 
         onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun navigatingBackPreservesInputValues() {
+        minBpmField.perform(typeText("123"))
+        maxBpmField.perform(typeText("140"))
+        greenNumberField.perform(typeText("333"))
+
+        calculateButton.perform(click())
+        onView(withId(R.id.txtHiSpeedHeader)).perform(pressBack())
+
+        onView(withId(R.id.textMinBPM)).check(matches(withText("123")))
+        onView(withId(R.id.textMaxBPM)).check(matches(withText("140")))
+        onView(withId(R.id.textGreenNumber)).check(matches(withText("333")))
+    }
+
+    @Test
+    fun navigatingUpPreservesInputValues() {
+        minBpmField.perform(typeText("130"))
+        maxBpmField.perform(typeText("160"))
+        greenNumberField.perform(typeText("310"))
+
+        calculateButton.perform(click())
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
+
+        onView(withId(R.id.textMinBPM)).check(matches(withText("130")))
+        onView(withId(R.id.textMaxBPM)).check(matches(withText("160")))
+        onView(withId(R.id.textGreenNumber)).check(matches(withText("310")))
     }
 
     private fun checkFirstRow(position: Int, text: String) {
