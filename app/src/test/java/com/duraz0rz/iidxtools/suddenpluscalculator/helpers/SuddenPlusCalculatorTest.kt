@@ -10,13 +10,6 @@ class SuddenPlusCalculatorTest {
     private val subject = SuddenPlusCalculator()
 
     @Test
-    fun testCalculateSuddenPlusNumberReturnsCorrectWhiteNumberForInput() {
-        val actualSuddenPlusNumber = subject.calculateSuddenPlus(hiSpeed = 2.0, bpm = 150, greenNumber = 310)
-
-        assertThat(actualSuddenPlusNumber, closeTo(465.51, error = 0.01))
-    }
-
-    @Test
     fun testGenerateSuddenPlusTableReturnsAListOfSuddenPlusValuesWithSuddenPlusNumber() {
         val actualList = subject.generateSuddenPlusTable(bpm = 120, greenNumber = 400)
 
@@ -64,5 +57,35 @@ class SuddenPlusCalculatorTest {
         )
 
         assertThat(actualList, equalTo(expectedList))
+    }
+
+    @Test
+    fun generateSuddenPlusTableTakesLiftValueIntoAccountWithoutMaxBPM() {
+        val actualList = subject.generateSuddenPlusTable(bpm = 120, greenNumber = 400, lift = 165)
+
+        val expectedHighSpeed400Value = SuddenPlusValue(highSpeed = "4.00", minWhiteNumber = -268)
+        val actualHighSpeed400Value = actualList.find { it.highSpeed == "4.00" }
+
+        val expectedHighSpeed100Value = SuddenPlusValue(highSpeed = "1.00", minWhiteNumber = 559)
+        val actualHighSpeed100Value = actualList.find { it.highSpeed == "1.00" }
+
+        assertThat(actualHighSpeed400Value, equalTo(expectedHighSpeed400Value))
+        assertThat(actualHighSpeed100Value, equalTo(expectedHighSpeed100Value))
+
+    }
+
+    @Test
+    fun generateSuddenPlusTableTakesLiftValueIntoAccountWithMaxBPM() {
+        val actualList = subject.generateSuddenPlusTable(bpm = 120, maxBpm = 160, greenNumber = 400, lift = 165)
+
+        val expectedHighSpeed400Value = SuddenPlusValue(highSpeed = "4.00", minWhiteNumber = -268, maxWhiteNumber = -636)
+        val actualHighSpeed400Value = actualList.find { it.highSpeed == "4.00" }
+
+        val expectedHighSpeed100Value = SuddenPlusValue(highSpeed = "1.00", minWhiteNumber = 559, maxWhiteNumber = 467)
+        val actualHighSpeed100Value = actualList.find { it.highSpeed == "1.00" }
+
+        assertThat(actualHighSpeed400Value, equalTo(expectedHighSpeed400Value))
+        assertThat(actualHighSpeed100Value, equalTo(expectedHighSpeed100Value))
+
     }
 }
