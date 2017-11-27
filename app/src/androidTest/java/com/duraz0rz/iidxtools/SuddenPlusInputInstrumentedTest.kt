@@ -42,6 +42,7 @@ class SuddenPlusInputInstrumentedTest {
     private val minBpmField = onView(withId(R.id.textMinBPM))
     private val maxBpmField = onView(withId(R.id.textMaxBPM))
     private val greenNumberField = onView(withId(R.id.textGreenNumber))
+    private val liftField = onView(withId(R.id.textLift))
     private val calculateButton = onView(withId(R.id.btnCalculate))
 
     @Test
@@ -86,12 +87,11 @@ class SuddenPlusInputInstrumentedTest {
         onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
     }
 
-
     @Test
-    fun theSuddenPlusNumbersAreCalculatedWhenTheEnterKeyIsPressedOnTheGreenNumberField() {
+    fun theSuddenPlusNumbersAreCalculatedWhenTheEnterKeyIsPressedOnTheLiftField() {
         minBpmField.perform(typeText("123"))
         greenNumberField.perform(typeText("123"))
-        greenNumberField.perform(pressImeActionButton())
+        liftField.perform(pressImeActionButton())
 
         onView(withId(R.id.txtHiSpeedHeader)).check(matches(isDisplayed()))
     }

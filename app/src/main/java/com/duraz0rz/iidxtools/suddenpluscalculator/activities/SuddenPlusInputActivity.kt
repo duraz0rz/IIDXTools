@@ -14,6 +14,7 @@ class SuddenPlusInputActivity : AppCompatActivity() {
     private lateinit var minBPMField: EditText
     private lateinit var maxBPMField: EditText
     private lateinit var greenNumberField: EditText
+    private lateinit var liftField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +23,12 @@ class SuddenPlusInputActivity : AppCompatActivity() {
         minBPMField = findViewById(R.id.textMinBPM)
         maxBPMField = findViewById(R.id.textMaxBPM)
         greenNumberField = findViewById(R.id.textGreenNumber)
+        liftField = findViewById(R.id.textLift)
 
-        greenNumberField.setOnEditorActionListener { textView, _, _ ->
+        liftField.setOnEditorActionListener { textView, _, _ ->
             calculateSuddenPlusNumbers(textView)
             true
         }
-
     }
 
     fun calculateSuddenPlusNumbers(view: View) {
