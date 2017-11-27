@@ -11,6 +11,7 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isEmptyString
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,10 +29,17 @@ class SuddenPlusTableActivityTest {
     private val minBPM = 144
     private val maxBPM = 160
     private val greenNumber = 310
+    private val lift = 165
 
     private val intentWithoutMaxBpm = Intent().apply {
         putExtra("BPM", minBPM)
         putExtra("GreenNumber", greenNumber)
+    }
+
+    private val intentWithLift = Intent().apply {
+        putExtra("BPM", minBPM)
+        putExtra("GreenNumber", greenNumber)
+        putExtra("Lift", lift)
     }
 
     private val intentWithMaxBpm = Intent().apply {
@@ -44,7 +52,7 @@ class SuddenPlusTableActivityTest {
     fun onCreateGeneratesRowsForEachValueReturned() {
         setupActivity(intentWithoutMaxBpm)
 
-        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber)).thenReturn(listOf(
+        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, greenNumber = greenNumber, lift = 0)).thenReturn(listOf(
             SuddenPlusValue("4.00", minWhiteNumber = 55),
             SuddenPlusValue("3.75", minWhiteNumber = 44)
         ))
@@ -60,7 +68,7 @@ class SuddenPlusTableActivityTest {
     fun onCreateFillsInMaxBPMValueWhenMaxWhiteNumberIsPresent() {
         setupActivity(intentWithMaxBpm)
 
-        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, maxBpm = maxBPM, greenNumber = greenNumber)).thenReturn(listOf(
+        whenever(mockSuddenPlusCalculator.generateSuddenPlusTable(bpm = minBPM, maxBpm = maxBPM, greenNumber = greenNumber, lift = 0)).thenReturn(listOf(
             SuddenPlusValue("4.00", minWhiteNumber = 66, maxWhiteNumber = 132),
             SuddenPlusValue("3.75", minWhiteNumber = 55, maxWhiteNumber = 111)
         ))
@@ -70,6 +78,15 @@ class SuddenPlusTableActivityTest {
 
         validateValueInRow(table, 1, 2, "132")
         validateValueInRow(table, 2, 2, "111")
+    }
+
+    @Test
+    fun onCreatePassesInLiftWhenPresent() {
+        setupActivity(intentWithLift)
+
+        activityController.create()
+
+        verify(mockSuddenPlusCalculator).generateSuddenPlusTable(minBPM, greenNumber = greenNumber, lift = lift)
     }
 
     @Test
