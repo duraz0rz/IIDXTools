@@ -15,7 +15,7 @@ android {
         applicationId "com.duraz0rz.iidxtools"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 130
+        versionCode getVersionCode()
         versionName '0.0.1-beta'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultConfig
@@ -60,4 +60,16 @@ dependencies {
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+}
+
+def getVersionCode() {
+    def buildNumber = System.getenv("CIRCLE_BUILD_NUM")
+    if (buildNumber && !buildNumber.isAllWhitespace()) {
+        def versionCode = 130 + Integer.parseInt(buildNumber)
+        println("versionCode is $versionCode")
+        versionCode
+    } else {
+        print("CIRCLE_BUILD_NUM not found...just returning 130")
+        130
+    }
 }
