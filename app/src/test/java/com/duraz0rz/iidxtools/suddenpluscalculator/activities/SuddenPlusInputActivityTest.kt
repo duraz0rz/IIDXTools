@@ -23,6 +23,7 @@ class SuddenPlusInputActivityTest {
     lateinit private var minBpmField: EditText
     lateinit private var maxBpmField: EditText
     lateinit private var greenNumberField: EditText
+    lateinit private var liftField: EditText
     lateinit private var calculateButton: Button
 
     @Before
@@ -31,6 +32,7 @@ class SuddenPlusInputActivityTest {
         minBpmField = subject.findViewById(R.id.textMinBPM)
         maxBpmField = subject.findViewById(R.id.textMaxBPM)
         greenNumberField = subject.findViewById(R.id.textGreenNumber)
+        liftField = subject.findViewById(R.id.textLift)
         calculateButton = subject.findViewById(R.id.btnCalculate)
     }
 
@@ -139,12 +141,34 @@ class SuddenPlusInputActivityTest {
         assertThat(ShadowApplication.getInstance().nextStartedActivity.extras.keySet(), !hasElement("MaxBPM"))
     }
 
-    private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String? = null, greenNumber: String = "0") {
+    @Test
+    fun calculateSuddenPlusNumbersSetsLiftIfPresent() {
+        setFieldsAndClick(minBPM = "160", greenNumber = "310", lift = "155")
+
+        val intent = ShadowApplication.getInstance().nextStartedActivity.extras
+
+        assertThat(intent["Lift"], present())
+        assertThat(intent["Lift"].toString(), equalTo("155"))
+    }
+
+    @Test
+    fun calculateSuddenPlusNumbersDoesNotSetLiftIfNotPresent() {
+        setFieldsAndClick(minBPM = "140", greenNumber = "330")
+
+        val intent = ShadowApplication.getInstance().nextStartedActivity.extras
+
+        assertThat(intent.keySet(), !hasElement("Lift"))
+    }
+
+    private fun setFieldsAndClick(minBPM: String = "0", maxBPM: String? = null, greenNumber: String = "0", lift: String? = null) {
         minBpmField.setText(minBPM)
         if (maxBPM != null) {
             maxBpmField.setText(maxBPM)
         }
         greenNumberField.setText(greenNumber)
+        if (lift != null) {
+            liftField.setText(lift)
+        }
         calculateButton.performClick()
     }
 }

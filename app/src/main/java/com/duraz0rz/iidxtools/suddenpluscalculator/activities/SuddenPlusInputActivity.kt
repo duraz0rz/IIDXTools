@@ -14,6 +14,7 @@ class SuddenPlusInputActivity : AppCompatActivity() {
     private lateinit var minBPMField: EditText
     private lateinit var maxBPMField: EditText
     private lateinit var greenNumberField: EditText
+    private lateinit var liftField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +23,12 @@ class SuddenPlusInputActivity : AppCompatActivity() {
         minBPMField = findViewById(R.id.textMinBPM)
         maxBPMField = findViewById(R.id.textMaxBPM)
         greenNumberField = findViewById(R.id.textGreenNumber)
+        liftField = findViewById(R.id.textLift)
 
-        greenNumberField.setOnEditorActionListener { textView, _, _ ->
+        liftField.setOnEditorActionListener { textView, _, _ ->
             calculateSuddenPlusNumbers(textView)
             true
         }
-
     }
 
     fun calculateSuddenPlusNumbers(view: View) {
@@ -35,8 +36,9 @@ class SuddenPlusInputActivity : AppCompatActivity() {
 
         if (!hasErrors) {
             val minBPM = parseInt(minBPMField.text.toString())
-            val maxBPM = if (maxBPMField.text.isNullOrEmpty()) null else parseInt(maxBPMField.text.toString())
+            val maxBPM = parseIntOrNull(maxBPMField)
             val greenNumber = parseInt(greenNumberField.text.toString())
+            val lift = parseIntOrNull(liftField)
 
             val calculateIntent = Intent(this, SuddenPlusTableActivity::class.java).apply {
                 putExtra("BPM", minBPM)
@@ -44,9 +46,20 @@ class SuddenPlusInputActivity : AppCompatActivity() {
                     putExtra("MaxBPM", maxBPM)
                 }
                 putExtra("GreenNumber", greenNumber)
+                if (lift != null) {
+                    putExtra("Lift", lift)
+                }
             }
+
             startActivity(calculateIntent)
         }
+    }
+
+    private fun fieldIsEmpty(field: EditText): Boolean = field.text.isNullOrEmpty()
+
+    private fun parseIntOrNull(field: EditText): Int? = when {
+        fieldIsEmpty(field) -> null
+        else -> parseInt(field.text.toString())
     }
 
     private fun minBpmIsEmpty(): Boolean {
@@ -79,9 +92,5 @@ class SuddenPlusInputActivity : AppCompatActivity() {
             }
         }
         return hasErrors
-    }
-
-    private fun fieldIsEmpty(field: EditText): Boolean {
-        return field.text.isNullOrEmpty()
     }
 }
