@@ -15,7 +15,7 @@ android {
         applicationId "com.duraz0rz.iidxtools"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 129
+        versionCode 130
         versionName '0.0.1-beta'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultConfig
